@@ -19,6 +19,14 @@ class travel_model {
     public function list_travel() {
         return $this->bll->list_travel_BLL();
     }
+
+    public function count_travel() {
+        return $this->bll->count_travel_BLL();
+    }
+ 
+    public function limit_travel($values) {
+        return $this->bll->limit_travel_BLL($values);
+    }
     
     public function details_travel($id) {
         return $this->bll->details_travel_BLL($id);

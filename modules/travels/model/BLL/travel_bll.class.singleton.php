@@ -24,6 +24,14 @@ class travel_bll {
         return $this->dao->list_travel_DAO($this->db);
     }
 
+    public function count_travel_BLL() {
+        return $this->dao->count_travel_DAO($this->db);
+    }
+
+    public function limit_travel_BLL($values) {
+        return $this->dao->limit_travel_DAO($this->db,$values);
+    }
+
     public function details_travel_BLL($id) {
         return $this->dao->details_travel_DAO($this->db,$id);
     }

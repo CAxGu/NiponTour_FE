@@ -1,8 +1,10 @@
 function load_travels() {
     var jqxhr = $.get("modules/travels/controller/controllerFE_Travels.class.php?load=true", function (data) {
         var json = JSON.parse(data);
-        console.log(json);
-        pintar_travel(json);
+        //console.log(json['totalresults']);
+        //console.log(data);
+       pintar_travel(json['limitresults']);
+       scroll(json['totalresults']);
         //alert( "success" );
     }).done(function () {
         //alert( "second success" );
@@ -72,3 +74,54 @@ function pintar_travel(data) {
           });
         });
 }
+
+
+
+function scroll (data){
+
+    var track_load = 0; //total loaded record group(s)
+    var loading  = false;
+    var items_per_group = 5;  
+    
+    var totalResults = data[0].totalviajes;    
+    console.log('Totalres: '+ totalResults);
+    var total_groups = totalResults/items_per_group;
+    console.log('Totalgroups: '+ total_groups);
+    var redirect= 'modules/travels/controller/controllerFE_Travels.class.php?load=true';
+   
+    $.ajax({
+        data:  {'group_no':track_load}, //datos que se envian a traves de ajax
+        url:   redirect, //archivo que recibe la peticion
+        type:  "POST", //método de envio
+        success: function()
+        {
+            track_load++;
+        }
+
+    }); 
+
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() == $(document).height()){
+            if(track_load < total_groups && loading==false){ //there's more data to load
+            loading = true; //prevent further ajax loading
+            $('.animation_image').show(); //show loading image
+            
+            //load data from the server using a HTTP POST request
+            $.post(redirect,{'group_no':track_load}, function(data){
+                var json = JSON.parse(data);
+                var news = json['limitresults'];
+                //console.log(news);
+                pintar_travel(news);
+                //$("#lista_travels").append(hola); //append received data into the element
+                track_load++; //loaded group increment
+                console.log('Tracks: '+ track_load);
+                loading = false; 
+            }).fail(function(xhr, ajaxOptions, thrownError) { //any errors?
+                console.log('sacabao!!!');
+                alert(thrownError); //alert with HTTP error
+                loading = false;
+            });
+        }
+         }
+    })
+};
