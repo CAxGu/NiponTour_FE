@@ -30,21 +30,21 @@ function pintar_travel(data) {
         
         data.forEach(function(travelItem) {
           var liEl = document.createElement("li");
-          liEl.setAttribute('id',travelItem.id);
+          liEl.setAttribute('id',travelItem.referencia);
   
           var avatarEL = document.createElement("div");
-          var html = '<img src="' + travelItem.avatar + '" height=250 width="250"> ';
+          var html = '<img src="' + travelItem.avatar + '" height=150 width="250"> ';
           avatarEL.innerHTML = html;
           liEl.appendChild(avatarEL);
 
-          var nameEl = document.createElement("h3");
-          var nametext = document.createTextNode(travelItem.name);
-          nameEl.innerHTML = '<strong>'+'Name:  '+' </strong>';
-          nameEl.appendChild(nametext);
-          liEl.appendChild(nameEl);
+          var ciudadEl = document.createElement("h3");
+          var ciudadtext = document.createTextNode(travelItem.ciudad+ ", " + travelItem.pais);
+          ciudadEl.innerHTML = '<strong>'+'Lugar:  '+' </strong>';
+          ciudadEl.appendChild(ciudadtext);
+          liEl.appendChild(ciudadEl);
 
           var priceEl = document.createElement("h2");
-          var pricetext = document.createTextNode(travelItem.price);
+          var pricetext = document.createTextNode(travelItem.precio);
           priceEl.innerHTML = 'Precio: ';
           priceEl.appendChild(pricetext);
           liEl.appendChild(priceEl);
@@ -54,7 +54,7 @@ function pintar_travel(data) {
 
           travelsEl.appendChild(liEl);
 
-          nameEl.addEventListener("click", function() {
+          ciudadEl.addEventListener("click", function() {
               var idtravel = travelItem.id;
               console.log(idtravel);
               $.ajax({

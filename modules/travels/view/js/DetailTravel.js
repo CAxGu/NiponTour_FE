@@ -1,7 +1,7 @@
 function load_travel() {
     var jqxhr = $.get("modules/travels/controller/controllerFE_Travels.class.php?idtravel=true",function (data) {
         var json = JSON.parse(data);
-        console.log(data);
+        console.log(json);
         pintar_travel(json,0);
         //alert( "success" );
     }).done(function () {
@@ -27,38 +27,45 @@ function pintar_travel(data,i) {
     var travelEl = document.getElementById("details_travel");        
 
           var divEl = document.createElement("div");
-          divEl.setAttribute('id',data[i].id);
+          divEl.setAttribute('id',data[i].referencia);
 
           
           var avatarEL = document.createElement("div");
-          var html = '<img src="' + data[i].avatar + '" height=250 width="250"> ';
+          var html = '<img src="' + data[i].avatar + '" height=350 width="550"> ';
           avatarEL.innerHTML = html;
           divEl.appendChild(avatarEL);
 
 
           var idEl = document.createElement("h2");
-          var idtext = document.createTextNode(data[i].id);
-          idEl.innerHTML = 'ID: ';
+          var idtext = document.createTextNode(data[i].referencia);
+          idEl.innerHTML = 'Ref: ';
           idEl.appendChild(idtext);
           divEl.appendChild(idEl);
 
-          var nameEl = document.createElement("h3");
-          var nametext = document.createTextNode(data[i].name);
-          nameEl.innerHTML = '<strong>'+'Name:  '+' </strong>';
-          nameEl.appendChild(nametext);
-          divEl.appendChild(nameEl);
+          var ciudadEl = document.createElement("h3");
+          var ciudadtext = document.createTextNode(data[i].pais+ "," + data[i].ciudad);
+          ciudadEl.innerHTML = '<strong>'+'Lugar:  '+' </strong>';
+          ciudadEl.appendChild(ciudadtext);
+          divEl.appendChild(ciudadEl);
 
+
+          var f_salEl = document.createElement("h3");
+          var f_saltext = document.createTextNode(data[i].f_sal);
+          f_salEl.innerHTML = '<strong>'+'Fecha de Salida:  '+' </strong>';
+          f_salEl.appendChild(f_saltext);
+          divEl.appendChild(f_salEl);
+
+          var f_llegEl = document.createElement("h3");
+          var f_llegtext = document.createTextNode(data[i].f_sal);
+          f_llegEl.innerHTML = '<strong>'+'Fecha de Vuelta:  '+' </strong>';
+          f_llegEl.appendChild(f_llegtext);
+          divEl.appendChild(f_llegEl);
+          
           var priceEl = document.createElement("h2");
-          var pricetext = document.createTextNode(data[i].price);
+          var pricetext = document.createTextNode(data[i].precio);
           priceEl.innerHTML = 'Precio: ';
           priceEl.appendChild(pricetext);
           divEl.appendChild(priceEl);
-
-
-          var descriptionEl = document.createElement("text");
-          var descriptiontext = document.createTextNode(data[i].description);
-          descriptionEl.appendChild(descriptiontext);
-          divEl.appendChild(descriptionEl);
 
 
         travelEl.appendChild(divEl);
